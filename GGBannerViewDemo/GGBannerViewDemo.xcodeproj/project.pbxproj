@@ -31,6 +31,7 @@
 		9C5CA0431B9208C8007730AD /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5CA0311B9208C8007730AD /* UIImageView+HighlightedWebCache.m */; };
 		9C5CA0441B9208C8007730AD /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5CA0331B9208C8007730AD /* UIImageView+WebCache.m */; };
 		9C5CA0451B9208C8007730AD /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5CA0351B9208C8007730AD /* UIView+WebCacheOperation.m */; };
+		9C8409EE1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8409ED1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		9C5CA0331B9208C8007730AD /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		9C5CA0341B9208C8007730AD /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		9C5CA0351B9208C8007730AD /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		9C8409EC1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GGBannerCollectionViewCell.h; sourceTree = "<group>"; };
+		9C8409ED1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GGBannerCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +181,8 @@
 			children = (
 				9C5CA0101B91F90C007730AD /* GGBannerView.h */,
 				9C5CA0111B91F90C007730AD /* GGBannerView.m */,
+				9C8409EC1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.h */,
+				9C8409ED1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.m */,
 			);
 			name = GGBannerView;
 			path = ../../GGBannerView;
@@ -334,6 +339,7 @@
 				9C5C9FEF1B91F694007730AD /* AppDelegate.m in Sources */,
 				9C5CA0421B9208C8007730AD /* UIImage+WebP.m in Sources */,
 				9C5CA0441B9208C8007730AD /* UIImageView+WebCache.m in Sources */,
+				9C8409EE1BD0B41E00FA1A9C /* GGBannerCollectionViewCell.m in Sources */,
 				9C5CA03B1B9208C8007730AD /* SDWebImageDownloader.m in Sources */,
 				9C5CA0451B9208C8007730AD /* UIView+WebCacheOperation.m in Sources */,
 				9C5CA03F1B9208C8007730AD /* UIButton+WebCache.m in Sources */,
@@ -537,6 +543,7 @@
 				9C5CA00B1B91F694007730AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C5CA00C1B91F694007730AD /* Build configuration list for PBXNativeTarget "GGBannerViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -545,6 +552,7 @@
 				9C5CA00E1B91F694007730AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
