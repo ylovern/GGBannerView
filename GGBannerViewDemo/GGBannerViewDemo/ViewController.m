@@ -27,6 +27,7 @@
                             @"http://7xk68o.com1.z0.glb.clouddn.com/5.jpg",
                             ];
     [self.bannerView configBanner:imageArray];
+
     
     
     

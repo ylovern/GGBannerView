@@ -10,7 +10,6 @@
 #import "GGBannerCollectionViewCell.h"
 @interface GGBannerView ()<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (nonatomic, strong) NSArray *imageArray;
-@property (nonatomic, strong) UIScrollView *bannerScrollView;
 @property (nonatomic, strong) UICollectionView *bannerCollectionView;
 @property (nonatomic, strong) UIPageControl *pageController;
 @property (nonatomic, strong) NSTimer *timer;
@@ -52,16 +51,15 @@
 }
 #pragma mark - private method
 - (void)initSubviews{
-    self.interval = 0.0;
-    self.scrollDirection = GGBannerViewScrollDirectionHorizontal;
     [self addSubview:self.bannerCollectionView];
     [self addSubview:self.pageController];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_bannerCollectionView]-0-|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_bannerCollectionView)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_bannerCollectionView]-0-|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_bannerCollectionView)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_pageController]-10-|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_pageController)]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_pageController]-0-|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_pageController)]];
-
-    
+    self.scrollEnabled = YES;
+    self.interval = 0.0;
+    self.scrollDirection = GGBannerViewScrollDirectionHorizontal;
 }
 
 - (void)addTimer{
@@ -196,6 +194,10 @@
         }
         [self.bannerCollectionView reloadData];
     }
+}
+- (void)setScrollEnabled:(BOOL)scrollEnabled{
+    _scrollEnabled = scrollEnabled;
+    self.bannerCollectionView.scrollEnabled = _scrollEnabled;
 }
 -(CGFloat)unitLength{
     return self.scrollDirection == GGBannerViewScrollDirectionHorizontal ? CGRectGetWidth(self.frame) : CGRectGetHeight(self.frame);

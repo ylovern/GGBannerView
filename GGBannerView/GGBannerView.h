@@ -29,13 +29,22 @@ typedef NS_ENUM(NSInteger, GGBannerViewScrollDirection) {
 @interface GGBannerView : UIView
 @property (nonatomic, weak) id<GGBannerViewDelegate> delegate;
 /**
- *  自动换页时间间隔，0s 不滚动
+ *  自动换页时间间隔，0s 不自动滚动
  */
 @property (nonatomic, assign) NSTimeInterval interval; // default is 0s
+/**
+ *  是否支持手势滑动，默认 YES
+ */
+@property (nonatomic, assign, getter=isScrollEnabled) BOOL scrollEnabled;
 /**
  *  滚动方向
  */
 @property (nonatomic, assign) GGBannerViewScrollDirection scrollDirection; // default is GGBannerViewScrollDirectionHorizontal
 
+/**
+ *  banners数据源
+ *
+ *  @param imageArray url字符串数组
+ */
 - (void)configBanner:(NSArray *)imageArray;
 @end
