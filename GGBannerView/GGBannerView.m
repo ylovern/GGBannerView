@@ -160,6 +160,8 @@
         _bannerCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
         [_bannerCollectionView registerClass:[GGBannerCollectionViewCell class] forCellWithReuseIdentifier:@"banner"];
         _bannerCollectionView.pagingEnabled = YES;
+        _bannerCollectionView.showsHorizontalScrollIndicator = NO;
+        _bannerCollectionView.showsVerticalScrollIndicator = NO;
     }
     return _bannerCollectionView;
 }
