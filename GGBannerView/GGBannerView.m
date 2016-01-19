@@ -110,7 +110,6 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    self.pageController.currentPage = indexPath.row == self.imageArray.count ? 0 : indexPath.row;
     GGBannerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"banner" forIndexPath:indexPath];
     NSString *url = [self getImageUrlForIndexPath:indexPath];
     if ([self.delegate respondsToSelector:@selector(imageView:loadImageForUrl:)]) {
@@ -131,6 +130,7 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    self.pageController.currentPage = self.offsetLength / self.unitLength;
     [self addTimer];
 }
 
@@ -146,6 +146,7 @@
             [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
         }
     }
+    self.pageController.currentPage = self.offsetLength / self.unitLength;
     self.oldOffsetLength = self.offsetLength;
 }
 
