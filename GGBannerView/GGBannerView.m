@@ -22,16 +22,15 @@
 @end
 @implementation GGBannerView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self initSubviews];
     }
     return self;
 }
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder: aDecoder];
     if (self) {
         [self initSubviews];
@@ -39,18 +38,20 @@
     return self;
 }
 
-- (void)layoutSubviews{
+- (void)layoutSubviews {
     [super layoutSubviews];
     self.flowLayout.itemSize = self.frame.size;
 }
+
 #pragma mark - public method
--(void)configBanner:(NSArray *)imageArray{
+- (void)configBanner:(NSArray *)imageArray {
     self.imageArray = imageArray;
     self.pageController.numberOfPages = imageArray.count;
     [self.bannerCollectionView reloadData];
 }
+
 #pragma mark - private method
-- (void)initSubviews{
+- (void)initSubviews {
     [self addSubview:self.bannerCollectionView];
     [self addSubview:self.pageController];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_bannerCollectionView]-0-|" options:0 metrics:0 views:NSDictionaryOfVariableBindings(_bannerCollectionView)]];
@@ -62,7 +63,7 @@
     self.scrollDirection = GGBannerViewScrollDirectionHorizontal;
 }
 
-- (void)addTimer{
+- (void)addTimer {
     if (self.interval == 0) {
         return;
     }
@@ -70,12 +71,12 @@
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
 
-
-- (void)removeTimer{
+- (void)removeTimer {
     [self.timer invalidate];
     self.timer = nil;
 }
-- (void)changePage{
+
+- (void)changePage {
     
     CGFloat newOffSetLength = self.offsetLength + self.unitLength;
     //在换页到最后一个的时候多加一点距离，触发回到第一个图片的事件
@@ -91,21 +92,24 @@
     [self.bannerCollectionView setContentOffset:offSet  animated:YES];
     
 }
-- (NSString *)getImageUrlForIndexPath:(NSIndexPath *)indexPath{
+
+- (NSString *)getImageUrlForIndexPath:(NSIndexPath *)indexPath {
     if (!(self.imageArray.count > 0)) {
         return nil;
     }
-     if (indexPath.row == self.imageArray.count){
+    if (indexPath.row == self.imageArray.count){
         return self.imageArray.firstObject;
-    }else{
+    } else {
         return self.imageArray[indexPath.row];
     }
 }
+
 #pragma mark - collectionView delegate
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.imageArray.count + 1;
 }
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     self.pageController.currentPage = indexPath.row == self.imageArray.count ? 0 : indexPath.row;
     GGBannerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"banner" forIndexPath:indexPath];
     NSString *url = [self getImageUrlForIndexPath:indexPath];
@@ -114,27 +118,23 @@
     }
     return cell;
 }
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.delegate respondsToSelector:@selector(bannerView:didSelectAtIndex:)]) {
         [self.delegate bannerView:self didSelectAtIndex:self.pageController.currentPage];
     }
-    
 }
 
 #pragma mark - scrollView delegate
-
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [_timer invalidate];
 }
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self addTimer];
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     UICollectionView *collectionView = (UICollectionView *)scrollView;
     if (self.oldOffsetLength > self.offsetLength) {
         if (self.offsetLength < 0)
@@ -146,13 +146,11 @@
             [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
         }
     }
-    
-    
     self.oldOffsetLength = self.offsetLength;
 }
 
 #pragma mark - setter && getter
-- (UICollectionView *)bannerCollectionView{
+- (UICollectionView *)bannerCollectionView {
     if (!_bannerCollectionView) {
         _bannerCollectionView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:self.flowLayout];
         _bannerCollectionView.dataSource = self;
@@ -165,7 +163,8 @@
     }
     return _bannerCollectionView;
 }
-- (UICollectionViewFlowLayout *)flowLayout{
+
+- (UICollectionViewFlowLayout *)flowLayout {
     if (!_flowLayout) {
         _flowLayout = [[UICollectionViewFlowLayout alloc]init];
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -174,7 +173,8 @@
     }
     return _flowLayout;
 }
-- (UIPageControl *)pageController{
+
+- (UIPageControl *)pageController {
     if (!_pageController) {
         _pageController = [[UIPageControl alloc] init];
         _pageController.currentPage = 0;
@@ -186,7 +186,8 @@
     }
     return  _pageController;
 }
-- (void)setScrollDirection:(GGBannerViewScrollDirection)scrollDirection{
+
+- (void)setScrollDirection:(GGBannerViewScrollDirection)scrollDirection {
     if (_scrollDirection != scrollDirection) {
         _scrollDirection = scrollDirection;
         if (scrollDirection == GGBannerViewScrollDirectionVertical) {
@@ -197,20 +198,24 @@
         [self.bannerCollectionView reloadData];
     }
 }
-- (void)setScrollEnabled:(BOOL)scrollEnabled{
+
+- (void)setScrollEnabled:(BOOL)scrollEnabled {
     _scrollEnabled = scrollEnabled;
     self.bannerCollectionView.scrollEnabled = _scrollEnabled;
 }
--(CGFloat)unitLength{
+
+- (CGFloat)unitLength {
     return self.scrollDirection == GGBannerViewScrollDirectionHorizontal ? CGRectGetWidth(self.frame) : CGRectGetHeight(self.frame);
 }
--(CGFloat)offsetLength{
+
+- (CGFloat)offsetLength {
     return self.scrollDirection == GGBannerViewScrollDirectionHorizontal ? self.bannerCollectionView.contentOffset.x : self.bannerCollectionView.contentOffset.y;
 }
--(CGFloat)contentLength{
+
+- (CGFloat)contentLength {
     return self.scrollDirection == GGBannerViewScrollDirectionHorizontal ? self.bannerCollectionView.contentSize.width : self.bannerCollectionView.contentSize.height;
 }
-- (void)setInterval:(NSTimeInterval)interval{
+- (void)setInterval:(NSTimeInterval)interval {
     _interval = interval;
     [self removeTimer];
     if (interval != 0) {
