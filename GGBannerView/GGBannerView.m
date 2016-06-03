@@ -106,6 +106,9 @@
 
 #pragma mark - collectionView delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if(self.imageArray.count == 1) {
+        return 1;
+    }
     return self.imageArray.count + 1;
 }
 
