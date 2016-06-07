@@ -90,6 +90,14 @@
         offSet = CGPointMake(0,newOffSetLength);
     }
     [self.bannerCollectionView setContentOffset:offSet  animated:YES];
+    //修复在滚动动画进行中切换tabbar或push一个新的controller时导致图片显示错位问题。
+    //原因：系统会在view not-on-screen时移除所有coreAnimation动画，导致动画无法完成，轮播图停留在切换中间的状态。
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //动画完成后的实际offset和应该到达的offset不一致，重置offset。
+        if (self.offsetLength!=newOffSetLength && self.offsetLength!=0) {
+            self.bannerCollectionView.contentOffset = offSet;
+        }
+    });
     
 }
 
