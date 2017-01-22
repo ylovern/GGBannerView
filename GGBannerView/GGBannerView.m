@@ -141,26 +141,34 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    self.pageController.currentPage = self.offsetLength / self.unitLength;
+//    self.pageController.currentPage = self.offsetLength / self.unitLength;
     [self addTimer];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UICollectionView *collectionView = (UICollectionView *)scrollView;
-    if (self.oldOffsetLength > self.offsetLength) {
-        if (self.offsetLength < 0)
-        {
-            [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.imageArray.count inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    if (self.imageArray.count>0) {
+        NSInteger page = (NSInteger)(self.offsetLength / self.unitLength) % self.imageArray.count;
+        UICollectionView *collectionView = (UICollectionView *)scrollView;
+        self.pageController.currentPage = page;
+        if (self.oldOffsetLength > self.offsetLength) {
+            if (self.offsetLength < 0)
+            {
+                [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.imageArray.count inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            }
+        }else{
+            //修复从index0 到 lastIndex 来回滚动问题
+            if (self.oldOffsetLength == 0 && self.offsetLength == self.imageArray.count * self.unitLength) {
+                return;
+            }
+            if (self.offsetLength >= self.contentLength - self.unitLength) {
+                [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            }
         }
-    }else{
-        if (self.offsetLength > self.contentLength - self.unitLength) {
-            [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        }
+        
+        self.oldOffsetLength = self.offsetLength;
     }
-    self.pageController.currentPage = self.offsetLength / self.unitLength;
-    self.oldOffsetLength = self.offsetLength;
+    
 }
-
 #pragma mark - setter && getter
 - (UICollectionView *)bannerCollectionView {
     if (!_bannerCollectionView) {
